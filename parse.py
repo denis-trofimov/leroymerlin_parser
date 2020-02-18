@@ -1,7 +1,9 @@
+from collections import namedtuple
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
-from collections import namedtuple
+
 
 def parseHandler(url, listSelector, textSelector, linkSelector, main_price=None):
 

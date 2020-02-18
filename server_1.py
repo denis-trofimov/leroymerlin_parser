@@ -1,6 +1,7 @@
 from flask import Flask, render_template
-from parse import parseHandler, parse_goods_page
 from flask_sqlalchemy import SQLAlchemy
+
+from parse import parse_goods_page, parseHandler
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
