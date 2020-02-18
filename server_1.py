@@ -20,8 +20,8 @@ db.create_all()
 
 @app.route('/loadData')
 def loadData():
-    db.drop_all()
-    db.create_all()
+    # db.drop_all()
+    # db.create_all()
     subCatList = []
     catalogue = parseHandler('https://leroymerlin.ru/catalogue/',
                            'div.items li',
