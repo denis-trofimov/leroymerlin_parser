@@ -20,8 +20,8 @@ db.create_all()
 
 @app.route('/loadData')
 def loadData():
-    # db.drop_all()
-    # db.create_all()
+    db.drop_all()
+    db.create_all()
     subCatList = []
     catalogue = parseHandler('https://leroymerlin.ru/catalogue/',
                            'div.items li',
@@ -45,8 +45,8 @@ def loadData():
         goodList = parse_goods_page(subCat['link'])
 
         for good in goodList:
-            row = Good(title = good['text'],
-                       link = good['link'],
+            row = Good(title = good.name,
+                       link = good.link,
                        category = subCat['text'])
             db.session.add(row)
             db.session.commit()
