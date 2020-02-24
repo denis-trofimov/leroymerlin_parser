@@ -39,8 +39,8 @@ def load_data():
         goods = parse_goods_page(sub_category['link'])
 
         for good in goods:
-            row = Good(title=good['text'],
-                       link=good['link'],
+            row = Good(title=good.name,
+                       link=good.link,
                        category=sub_category['text'])
             db.session.add(row)
             db.session.commit()
