@@ -72,7 +72,7 @@ def parse_products_cards(content, baseurl):
         url = product.get('data-product-url')
         url = urljoin(baseurl, url)
         price = product.get('data-product-price')
-        print(name, price, url)
+        # print(name, price, url)
 
         products.append(Product(name=name, url=url, price=price))
 
