@@ -5,7 +5,7 @@ from collections import namedtuple
 
 
 "A new custom products tuple"
-Product = namedtuple("Product", ('name', 'link', 'price'))
+Product = namedtuple("Product", ('name', 'url', 'price'))
 
 
 def parse_handler(url, listSelector, textSelector, linkSelector):
@@ -69,12 +69,12 @@ def parse_products_cards(content, baseurl):
 
         product = card.select_one('div.ui-product-card')
         name = product.get('data-product-name')
-        link = product.get('data-product-url')
-        link = urljoin(baseurl, link)
+        url = product.get('data-product-url')
+        url = urljoin(baseurl, url)
         price = product.get('data-product-price')
-        print(name, price, link)
+        print(name, price, url)
 
-        products.append(Product(name=name, link=link, price=price))
+        products.append(Product(name=name, url=url, price=price))
 
     print('unread {} rows'.format(unread_count))
     return products

@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 class Good(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
-    link = db.Column(db.String(120))
+    url = db.Column(db.String(120))
     category = db.Column(db.String(120))
 
     def __repr__(self):
@@ -19,8 +19,8 @@ class Good(db.Model):
 
 @app.route('/parse')
 def load_data():
-    # db.drop_all()
-    # db.create_all()
+    db.drop_all()
+    db.create_all()
     sub_categories = []
     catalogue = parse_handler('https://leroymerlin.ru/catalogue/',
                               'div.items li',
@@ -40,7 +40,7 @@ def load_data():
 
         for good in goods:
             row = Good(title=good.name,
-                       link=good.link,
+                       url=good.url,
                        category=sub_category['text'])
             db.session.add(row)
             db.session.commit()
