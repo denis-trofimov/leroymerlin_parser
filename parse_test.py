@@ -37,3 +37,7 @@ def test_parse_products_page(sub_category_content, url="https://leroymerlin.ru/c
     assert product.sub_category_id == 20
     assert product.category_id == 65
     assert product.web_saleable == "true"
+    assert product.material == "Гипс"
+    assert product.gamma == "A"
+    assert product.color == "Серый"
+    assert product.brand == "KNAUF"
