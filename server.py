@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from parse import parse_handler, parse_goods_page
+from parse import parse_handler, parse_sub_category_page
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -36,7 +36,7 @@ def load_data():
                                                         )
 
     for sub_category in sub_categories[0:1]:
-        goods = parse_goods_page(sub_category['link'])
+        goods = parse_sub_category_page(sub_category['link'])
 
         for good in goods:
             row = Good(title=good.name,

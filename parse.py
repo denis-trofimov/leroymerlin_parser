@@ -15,7 +15,7 @@ def parse_handler(url, listSelector, textSelector, linkSelector):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     cards = soup.select(listSelector)
-    unreadCnt = 0
+    unread_count = 0
     for card in cards:
 
         try:
@@ -26,21 +26,22 @@ def parse_handler(url, listSelector, textSelector, linkSelector):
             print(_dict['text'], _dict['link'])
             result.append(_dict)
         except Exception as e:
-            unreadCnt += 1
+            unread_count += 1
             print(e)
 
-    print('unread {} rows'.format(unreadCnt))
+    print('unread {} rows'.format(unread_count))
     return result
 
 
-def parse_goods_page(url):
+def parse_sub_category_page(url):
     "parse_goods_page is a new custom goods page parser"
+    responce = requests.get(url)
+    if not responce.ok:
+        return []
 
     products = []
-    unreadCnt = 0
-
-    page = requests.get(url)
-    soup = BeautifulSoup(page.content, 'html.parser')
+    unread_count = 0
+    soup = BeautifulSoup(responce.content, 'html.parser')
     cards = soup.select('div.ui-sorting-cards')
 
     for card in cards:
@@ -56,5 +57,5 @@ def parse_goods_page(url):
 
         products.append(Product(name=name, link=link, price=price))
 
-    print('unread {} rows'.format(unreadCnt))
+    print('unread {} rows'.format(unread_count))
     return products
