@@ -8,7 +8,7 @@ from collections import namedtuple
 Good = namedtuple("Good", ('name', 'link', 'price'))
 
 
-def parse_handler(url, listSelector, textSelector, linkSelector, main_price=None):
+def parse_handler(url, listSelector, textSelector, linkSelector):
 
     result = []
 
@@ -24,10 +24,6 @@ def parse_handler(url, listSelector, textSelector, linkSelector, main_price=None
             _dict['link'] = urljoin(
                 url, card.select_one(linkSelector).get('href'))
             print(_dict['text'], _dict['link'])
-            if main_price:
-                print(card.select_one(main_price).get('content'))
-                # _dict['main_price'] = card.select_one(main_price).get('content')
-
             result.append(_dict)
         except Exception as e:
             unreadCnt += 1
