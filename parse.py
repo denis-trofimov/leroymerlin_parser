@@ -3,7 +3,12 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from collections import namedtuple
 
-def parseHandler(url, listSelector, textSelector, linkSelector, main_price=None):
+
+"A new custom goods tuple"
+Good = namedtuple("Good", ('name', 'link', 'price'))
+
+
+def parse_handler(url, listSelector, textSelector, linkSelector, main_price=None):
 
     result = []
 
@@ -16,7 +21,8 @@ def parseHandler(url, listSelector, textSelector, linkSelector, main_price=None)
         try:
             _dict = {}
             _dict['text'] = card.select_one(textSelector).text
-            _dict['link'] =urljoin(url, card.select_one(linkSelector).get('href'))
+            _dict['link'] = urljoin(
+                url, card.select_one(linkSelector).get('href'))
             print(_dict['text'], _dict['link'])
             if main_price:
                 print(card.select_one(main_price).get('content'))
@@ -27,13 +33,9 @@ def parseHandler(url, listSelector, textSelector, linkSelector, main_price=None)
             unreadCnt += 1
             print(e)
 
-
-
     print('unread {} rows'.format(unreadCnt))
     return result
 
-# EmployeeRecord = namedtuple('EmployeeRecord', 'name, age, title, department, paygrade')
-Good = namedtuple("Good", ('name', 'link', 'price'))
 
 def parse_goods_page(url):
     "parse_goods_page is a new custom goods page parser"
