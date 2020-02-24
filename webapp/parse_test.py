@@ -1,4 +1,4 @@
-from parse import parse_products_cards
+from webapp.parse import parse_products_cards
 import pytest
 
 
