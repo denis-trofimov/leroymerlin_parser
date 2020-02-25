@@ -18,20 +18,21 @@ def create_app():
                                   'a'
                                   )
 
-        for sub_category in catalogue[0:1]:
+        for sub_category in catalogue[0:6]:
             sub_categories = sub_categories + parse_handler(sub_category['link'],
                                                             'div.items li',
                                                             'a span',
                                                             'a'
                                                             )
 
-        for sub_category in sub_categories[0:1]:
+        for sub_category in sub_categories[0:6]:
             goods = parse_sub_category_page(sub_category['link'])
 
             for good in goods:
-                row = Product(title=good.name,
-                           url=good.url,
-                           category=sub_category['text'])
+                row = Product(name=good.name, url=good.url, price=good.price,
+                              weight=good.weight, stock=good.stock, id=good.id,
+                              brand=good.brand, category=sub_category['text']
+                              )
                 db.session.add(row)
                 db.session.commit()
 
