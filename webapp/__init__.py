@@ -1,27 +1,16 @@
 from flask import Flask, render_template
 from webapp.parse import parse_handler, parse_sub_category_page
-from flask_sqlalchemy import SQLAlchemy
-
-
-class Good(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120))
-    url = db.Column(db.String(120))
-    category = db.Column(db.String(120))
-
-    def __repr__(self):
-        return '{} {}'.format(self.id, self.title)
+from webapp.model import db, Product
 
 
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-    db = SQLAlchemy(app)
+    db.init_app(app)
 
     @app.route('/parse')
     def load_data():
-        db.drop_all()
-        db.create_all()
+
         sub_categories = []
         catalogue = parse_handler('https://leroymerlin.ru/catalogue/',
                                   'div.items li',
@@ -40,7 +29,7 @@ def create_app():
             goods = parse_sub_category_page(sub_category['link'])
 
             for good in goods:
-                row = Good(title=good.name,
+                row = Product(title=good.name,
                            url=good.url,
                            category=sub_category['text'])
                 db.session.add(row)
@@ -50,7 +39,7 @@ def create_app():
 
     @app.route('/')
     def home():
-        data = Good.query.all()
+        data = Product.query.all()
         return render_template('home.html', data=data)
 
     return app
