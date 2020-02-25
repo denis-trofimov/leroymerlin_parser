@@ -8,7 +8,7 @@
 
 ### Run 
 
-`export FLASK_APP=server.py && export FLASK_ENV=development && flask run`
+`export FLASK_APP=webapp && export FLASK_ENV=development && flask run`
 
 ### Develop
 

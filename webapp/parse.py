@@ -5,7 +5,7 @@ from collections import namedtuple
 
 
 "A new custom products tuple"
-Product = namedtuple("Product", ('name', 'url', 'price'))
+Product = namedtuple("Product", ('id', 'name', 'brand', 'url', 'price', 'weight', 'stock'))
 
 
 def parse_handler(url, listSelector, textSelector, linkSelector):
@@ -66,15 +66,19 @@ def parse_products_cards(content, baseurl):
     cards = soup.select('div.ui-sorting-cards')
 
     for card in cards:
-
         product = card.select_one('div.ui-product-card')
         name = product.get('data-product-name')
         url = product.get('data-product-url')
         url = urljoin(baseurl, url)
         price = product.get('data-product-price')
         # print(name, price, url)
-
-        products.append(Product(name=name, url=url, price=price))
+        weight = float(product.get('data-product-weight'))
+        id = int(product.get('data-product-id'))
+        stock = int(product.get('data-product-stock-value'))
+        brand = product.get('data-product-brand')
+        new_product = Product(name=name, url=url, price=price, weight=weight, 
+            stock=stock, id=id, brand=brand)
+        products.append(new_product)
 
     print('unread {} rows'.format(unread_count))
     return products
